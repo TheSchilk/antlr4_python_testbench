@@ -19,4 +19,3 @@ $VAR3
 defined(test) ? 1 : 2
 strlen("TESSSTTT")
 a + b - c
-1 + strlen
