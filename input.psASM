@@ -47,6 +47,9 @@ ADDLA $a
 ADDLB $b
 @endmacro
 
+.clear_regs
+labeled_macro_exp: .add_to_regs 1, 2
+
 # Do I need this?
 # @define some_val_plus_one(a) a+1
 

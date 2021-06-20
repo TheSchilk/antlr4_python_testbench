@@ -9,9 +9,9 @@ line
 // ======= Instruction =======
 
 instruction
-    : (labels)? (INST | IDENTIFIER) (expr (COMMA expr)*)?
+    : (labels)? INST (expr (COMMA expr)*)?
     ;
-    
+
 
 labels
     : IDENTIFIER (COMMA IDENTIFIER)* COLON
@@ -49,6 +49,7 @@ preproc_directive
     | preproc_ascii_heap
     | preproc_ascii_stack
     | preproc_macro
+    | preproc_macro_expansion
     | preproc_endmacro
     ;
 
@@ -111,6 +112,10 @@ preproc_macro
 
 preproc_endmacro
     : ENDMACRO 
+    ;
+
+preproc_macro_expansion
+    : (labels)? IDENTIFIER (expr (COMMA expr)*)?
     ;
 
 DEFINE: '@define' ;
