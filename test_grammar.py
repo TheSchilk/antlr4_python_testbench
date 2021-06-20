@@ -2,12 +2,23 @@ import antlr4
 from antlr4.InputStream import InputStream
 from antlr4.tree.Trees import Trees
 from antlr4.error.ErrorListener import ErrorListener
+from antlr4.Utils import escapeWhitespace
 from os.path import isfile, join
 from os import listdir
 
 # TODO import the correct lexer and parser class
 from antlr4_grammar.HelloLexer import HelloLexer
 from antlr4_grammar.HelloParser import HelloParser
+
+
+def toVisualStringTree(t, recog, prefix):
+    result = ""
+    node = escapeWhitespace(Trees.getNodeText(t, recog.ruleNames), False)
+    result += prefix + node + '\n'
+    for i in range(0, t.getChildCount()):
+        result += toVisualStringTree(t.getChild(i), recog, prefix + '  ')
+
+    return result
 
 
 class TestErrorListener(ErrorListener):
@@ -44,6 +55,8 @@ class GrammarTest:
         self.print("Input:")
         self.print(inp)
 
+        self.print("Errors:")
+
         # TODO instantiate the correct lexer class
         lexer = HelloLexer(InputStream(inp))
         lexer.removeErrorListeners()
@@ -58,8 +71,15 @@ class GrammarTest:
         # TODO call the correct starting rule
         tree = parser.r()
 
-        # Print resulting tree
+        # Print resulting tree in bracket notation
+        self.print("")
+        self.print("Bracket Tree:")
         self.print(Trees.toStringTree(tree, None, parser))
+
+        # Print resulting tree visually
+        self.print("")
+        self.print("Tree:")
+        self.print(toVisualStringTree(tree, parser, ""))
 
 
 def main():
