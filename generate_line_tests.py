@@ -4,7 +4,7 @@
 from os.path import join
 
 # TODO Set input file
-input_file = 'input.txt'
+input_file = 'input.psASM'
 test_folder = 'tests'
 
 with open(input_file, 'r') as in_file:

@@ -1,0 +1,143 @@
+# PreProc things:
+
+@include "Render.psASM"
+
+# Define for existence
+@define THIS_VAL_EXISTS
+
+# Define value
+@define some_val 1
+@define other_val some_val + 1 
+
+# Define with scope
+@define .some_local_val some_val - 20
+@define _some_file_local_val defined(.some_local_val) ? 1 : 0
+
+@ifdef THIS_VAL_EXISTS
+
+    @ifndef YES
+        
+        @if _some_file_local_val > 1
+
+        @endif
+
+    @endif
+
+@elif defined(THIS_VA)
+
+@else
+
+@endif
+
+@warning "U sure?"
+
+@error "U done goofed"
+
+@ascii_heap  "This String will get saved to RAM, starting at adr 0x10", 0x10
+
+@ascii_stack "This String will get pushed onto the stack"
+
+@macro .clear_regs 
+LITA 0x00
+LITB 0x00
+@endmacro
+
+@macro .add_to_regs $a, $b
+ADDLA $a
+ADDLB $b
+@endmacro
+
+# Do I need this?
+# @define some_val_plus_one(a) a+1
+
+# This would be really usefull for stack size:
+@redefine some_val some_val+1
+
+@define my_string "Thiiis is a string"
+@define string_start 0x10
+@define string_end   string_start+strlen(my_string)
+@ascii_heap string_start, my_string
+
+# Reserved identifier names:
+# defined()
+# strlen()
+# All Instructions
+# All preproc directives?
+# MAIN
+# INTERRUPT
+
+l_alone:
+# Expressions as args:
+labeled: LITA 1+1
+# LITA some_val_plus_one(1)
+l1, l2: IFSM 1+1, 1+1
+
+
+# All operators:
+@define a 1
+@define b 2
+
+# built-ins:
+LITA defined(MAIN)
+LITA strlen("SomeString")
+
+# Unary:
+LITA +a
+LITA -b
+
+# Not + Logical Not
+LITA !a
+LITA ~a
+
+# Multiplication etc
+LITA a*b
+LITA a/b
+LITA a%2
+
+# Addition etc
+LITA a+b
+LITA a-b
+
+# Shifts
+LITA a << 1
+LITB b >> 2
+
+# comparison
+LITA a < b
+LITA a <= b
+LITA a > b
+LITA a <= b
+LITA a == b
+LITA a != b
+
+# bitwise 
+LITA a & b
+LITA a ^ b
+LITA a | b
+LITA a && b
+LITA A || b
+
+# ternay
+LITA a ? 1 : b
+
+LITA 0b01
+LITA 0x0123456789abcdef
+LITA 123456789
+LITA (1)
+LITA +1
+LITA -1
+LITA 1++1
+LITA 1+-2
+LITA 1/2
+LITA 1*3
+LITA 1*-3
+LITA 2%3
+LITA 1+1*2
+LITA 1*2000-1 >= 1 ? 10 : 0x1000
+LITA var
+LITA _var
+LITA .var
+LITA $VAR3
+LITA defined(test) ? 1 : 2
+LITA strlen("TESSSTTT")
+LITA a + b - c

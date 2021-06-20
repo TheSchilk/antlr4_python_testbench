@@ -1,4 +1,4 @@
-GRAMMAR_NAME=expression
+GRAMMAR_NAME=psASM
 GRAMMAR_COMPILE_FLAG=.compiled_grammar
 ANTLR4_CMD=antlr4
 
