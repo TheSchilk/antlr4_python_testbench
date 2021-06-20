@@ -8,6 +8,7 @@ GENERATE_TESTS=
 
 .PHONY: test
 test: $(GRAMMAR_COMPILE_FLAG)
+	mkdir -p tests/
 	$(GENERATE_TESTS)
 	python3 test_grammar.py
 
