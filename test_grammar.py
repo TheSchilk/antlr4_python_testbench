@@ -16,6 +16,7 @@ class TestErrorListener(ErrorListener):
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
         self.gtest.print("line " + str(line) + ":" + str(column) + " " + msg)
+        pass
 
 
 class GrammarTest:
@@ -25,14 +26,20 @@ class GrammarTest:
         self.out_file = out_file
 
     def print(self, txt):
+        # Print to both stdout and test result file
         self.out_file.write(str(txt)+'\n')
         print(txt)
 
     def test(self):
         inp = self.in_file.read()
 
+        # Make sure error messages get printed to result file and stdout
         error_listener = TestErrorListener(self)
 
+        # Visual seperator (only in stdout)
+        print('===========================================')
+
+        # Test header
         self.print("Test %s:" % self.test_file_name)
         self.print("Input:")
         self.print(inp)
@@ -51,11 +58,8 @@ class GrammarTest:
         # TODO call the correct starting rule
         tree = parser.r()
 
+        # Print resulting tree
         self.print(Trees.toStringTree(tree, None, parser))
-
-        print("")
-        print("")
-        print("")
 
 
 def main():
