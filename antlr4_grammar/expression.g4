@@ -20,7 +20,7 @@ expr
 atom
    : numerical_literal
    | DEFINED LPAREN IDENTIFIER RPAREN
-   | STRLEN LPAREN (IDENTIFIER | String_Literal) RPAREN
+   | STRLEN LPAREN (IDENTIFIER | STRING_LITERAL) RPAREN
    | IDENTIFIER
    ;
 
@@ -66,41 +66,41 @@ TERN_B: ':' ;
 // ======= Numerical Literals =======
 
 numerical_literal
-   : Binary_Literal
-   | Hex_Literal
-   | Dec_Literal
-   | Char_Literal
+   : BINARY_LITERAL
+   | HEX_LITERAL
+   | DEC_LITERAL
+   | CHAR_LITERAL
    ;
 
-Char_Literal
-   : '\'' Char '\''
+CHAR_LITERAL
+   : '\'' CHAR '\''
    ;
 
 fragment
-Char
+CHAR
     : [\u0020-\u007E] 
     ;
 
-Binary_Literal
+BINARY_LITERAL
    : '0b'[01]+
    ;
 
-Hex_Literal
+HEX_LITERAL
    : '0x'[0-9a-fA-F]+
    ;
 
-Dec_Literal
+DEC_LITERAL
    : [0-9]+
    ;
 
 // ======= String Literal =====
-String_Literal
-    :  '"' CharSequence? '"'
+STRING_LITERAL
+    :  '"' CHAR_SEQUENCE? '"'
     ;
 
 fragment
-CharSequence
-    :   Char+
+CHAR_SEQUENCE
+    :   CHAR+
     ;
 
 // ======= Identifiers =====
@@ -123,6 +123,5 @@ IDENTIFIER
 
 // ======= Others =======
 
-Whitespace: [ \t]+ -> skip ;
-
+WS: [ \t]+ -> skip ;
 EOL: [\r\n]+ -> skip;
