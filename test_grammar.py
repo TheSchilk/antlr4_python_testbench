@@ -26,6 +26,7 @@ class TestErrorListener(ErrorListener):
         self.gtest = gtest
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        self.gtest.did_error = True
         self.gtest.print("line " + str(line) + ":" + str(column) + " " + msg)
         pass
 
@@ -35,6 +36,7 @@ class GrammarTest:
         self.test_file_name = test_file_name
         self.in_file = in_file
         self.out_file = out_file
+        self.did_error = False
 
     def print(self, txt):
         # Print to both stdout and test result file
@@ -88,11 +90,23 @@ def main():
     test_files = [f for f in listdir(
         test_folder) if isfile(join(test_folder, f))]
 
+    errored_tests = []
+
     for test_file_name in test_files:
         with open(join(test_folder, test_file_name), 'r') as in_file:
             with open(join(out_folder, test_file_name), 'w') as out_file:
                 gtest = GrammarTest(test_file_name, in_file, out_file)
                 gtest.test()
+                if gtest.did_error:
+                    errored_tests.append(gtest)
+
+    print('===========================================')
+    if len(errored_tests) == 0:
+        print("No test errored.")
+    else:
+        print("%i test(s) errored:" % len(errored_tests))
+        for err_test in errored_tests:
+            print("  " + err_test.test_file_name)
 
 
 if __name__ == '__main__':
