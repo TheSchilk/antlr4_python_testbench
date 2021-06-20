@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# makefile flag
+.compiled_grammar
+
+# test output
+test_outs/
