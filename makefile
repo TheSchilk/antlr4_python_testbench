@@ -9,6 +9,7 @@ GENERATE_TESTS=
 .PHONY: test
 test: $(GRAMMAR_COMPILE_FLAG)
 	mkdir -p tests/
+	rm tests/*_autogen.txt -rf 
 	$(GENERATE_TESTS)
 	python3 test_grammar.py
 
