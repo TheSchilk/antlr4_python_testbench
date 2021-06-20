@@ -7,8 +7,8 @@ from os.path import isfile, join
 from os import listdir
 
 # TODO import the correct lexer and parser class
-from antlr4_grammar.HelloLexer import HelloLexer
-from antlr4_grammar.HelloParser import HelloParser
+from antlr4_grammar.expressionLexer import expressionLexer
+from antlr4_grammar.expressionParser import expressionParser
 
 
 def toVisualStringTree(t, recog, prefix):
@@ -60,18 +60,18 @@ class GrammarTest:
         self.print("Errors:")
 
         # TODO instantiate the correct lexer class
-        lexer = HelloLexer(InputStream(inp))
+        lexer = expressionLexer(InputStream(inp))
         lexer.removeErrorListeners()
         lexer.addErrorListener(error_listener)
         stream = antlr4.CommonTokenStream(lexer)
 
         # TODO instantiate the correct parser class
-        parser = HelloParser(stream)
+        parser = expressionParser(stream)
         parser.removeErrorListeners()
         parser.addErrorListener(error_listener)
 
         # TODO call the correct starting rule
-        tree = parser.r()
+        tree = parser.expr()
 
         # Print resulting tree in bracket notation
         self.print("")

@@ -4,7 +4,7 @@
 from os.path import join
 
 # TODO Set input file
-input_file = 'test_each_line.txt'
+input_file = 'input.txt'
 test_folder = 'tests'
 
 with open(input_file, 'r') as in_file:

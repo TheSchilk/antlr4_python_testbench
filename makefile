@@ -1,10 +1,10 @@
-GRAMMAR_NAME=Hello
+GRAMMAR_NAME=expression
 GRAMMAR_COMPILE_FLAG=.compiled_grammar
 ANTLR4_CMD=antlr4
 
 GENERATE_TESTS=
 # Enable generation by uncommenting the following line
-# GENERATE_TESTS=python3 generate_line_tests.py
+GENERATE_TESTS=python3 generate_line_tests.py
 
 .PHONY: test
 test: $(GRAMMAR_COMPILE_FLAG)
