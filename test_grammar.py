@@ -2,10 +2,12 @@ import antlr4
 from antlr4.InputStream import InputStream
 from antlr4.tree.Trees import Trees
 from antlr4.error.ErrorListener import ErrorListener
-from antlr4_grammar.HelloLexer import HelloLexer
-from antlr4_grammar.HelloParser import HelloParser
 from os.path import isfile, join
 from os import listdir
+
+# TODO import the correct lexer and parser class
+from antlr4_grammar.HelloLexer import HelloLexer
+from antlr4_grammar.HelloParser import HelloParser
 
 
 class TestErrorListener(ErrorListener):
@@ -35,15 +37,18 @@ class GrammarTest:
         self.print("Input:")
         self.print(inp)
 
+        # TODO instantiate the correct lexer class
         lexer = HelloLexer(InputStream(inp))
         lexer.removeErrorListeners()
         lexer.addErrorListener(error_listener)
         stream = antlr4.CommonTokenStream(lexer)
 
+        # TODO instantiate the correct parser class
         parser = HelloParser(stream)
         parser.removeErrorListeners()
         parser.addErrorListener(error_listener)
 
+        # TODO call the correct starting rule
         tree = parser.r()
 
         self.print(Trees.toStringTree(tree, None, parser))
