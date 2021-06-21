@@ -53,7 +53,7 @@ preproc_directive
 
     
 preproc_define
-    : DEFINE IDENTIFIER (expr | STRING_LITERAL)?
+    : DEFINE IDENTIFIER expr? 
     ;
 
 preproc_include
@@ -93,11 +93,11 @@ preproc_error
     ;
 
 preproc_ascii_heap
-    : ASCII_HEAP (IDENTIFIER | STRING_LITERAL) COMMA expr
+    : ASCII_HEAP STRING_LITERAL COMMA expr
     ;
 
 preproc_ascii_stack
-    : ASCII_STACK (IDENTIFIER | STRING_LITERAL)
+    : ASCII_STACK STRING_LITERAL
     ;
 
 preproc_macro
@@ -156,12 +156,10 @@ expr
 atom
    : numerical_literal
    | DEFINED LPAREN IDENTIFIER RPAREN
-   | STRLEN LPAREN (IDENTIFIER | STRING_LITERAL) RPAREN
    | IDENTIFIER
    ;
 
 DEFINED: 'defined' ;
-STRLEN: 'strlen' ;
 
 LPAREN: '(' ;
 RPAREN: ')' ;

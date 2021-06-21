@@ -53,14 +53,11 @@ labeled_macro_exp: .add_to_regs 1, 2
 # Do I need this?
 # @define some_val_plus_one(a) a+1
 
-@define my_string "Thiiis is a string"
 @define string_start 0x10
-@define string_end   string_start+strlen(my_string)
-@ascii_heap string_start, my_string
+@ascii_heap "This is my string!", string_start
 
 # Reserved identifier names:
 # defined()
-# strlen()
 # All Instructions
 # All preproc directives?
 # MAIN
@@ -79,7 +76,6 @@ l1, l2: IFSM 1+1, 1+1
 
 # built-ins:
 LITA defined(MAIN)
-LITA strlen("SomeString")
 
 # Unary:
 LITA +a
@@ -139,5 +135,4 @@ LITA _var
 LITA .var
 LITA $VAR3
 LITA defined(test) ? 1 : 2
-LITA strlen("TESSSTTT")
 LITA a + b - c
