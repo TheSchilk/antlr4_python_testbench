@@ -12,7 +12,6 @@ instruction
     : (labels)? INST (expr (COMMA expr)*)?
     ;
 
-
 labels
     : IDENTIFIER (COMMA IDENTIFIER)* COLON
     ;
@@ -34,7 +33,6 @@ COMMA: ',' ;
 
 preproc_directive
     : preproc_define
-    | preproc_redefine
     | preproc_include
     | preproc_if
     | preproc_include
@@ -56,10 +54,6 @@ preproc_directive
     
 preproc_define
     : DEFINE IDENTIFIER (expr | STRING_LITERAL)?
-    ;
-
-preproc_redefine
-    : REDEFINE IDENTIFIER (expr | STRING_LITERAL)?
     ;
 
 preproc_include
@@ -129,7 +123,6 @@ IFNDEF: '@ifndef' ;
 ELIF: '@elif' ;
 ELSE: '@else' ;
 ENDIF: '@endif' ;
-
 
 WARNING: '@warning';
 ERROR: '@error' ;
@@ -238,7 +231,6 @@ STRING_LITERAL
     :  '"' CHAR_SEQUENCE? '"'
     ;
 
-
 fragment
 CHAR_SEQUENCE
     :   CHAR+
@@ -256,15 +248,13 @@ IDENTIFIER_OTHER_CHAR
    : [a-zA-Z0-9_\-]
    ;
 
-
 IDENTIFIER
    : IDENTIFIER_FIRST_CHAR (IDENTIFIER_OTHER_CHAR+)?
    ;
 
-
 // ======= Others =======
 
-Comment
+COMMENT
    : '#' ~[\r\n]* -> skip
    ;
 

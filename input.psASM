@@ -53,9 +53,6 @@ labeled_macro_exp: .add_to_regs 1, 2
 # Do I need this?
 # @define some_val_plus_one(a) a+1
 
-# This would be really usefull for stack size:
-@redefine some_val some_val+1
-
 @define my_string "Thiiis is a string"
 @define string_start 0x10
 @define string_end   string_start+strlen(my_string)
@@ -93,7 +90,7 @@ LITA !a
 LITA ~a
 
 # Multiplication etc
-LITA a*b
+LITA 10
 LITA a/b
 LITA a%2
 
