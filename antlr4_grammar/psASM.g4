@@ -3,7 +3,13 @@ grammar psASM;
 // ====== Line =======
 
 line
-   : (labels | instruction | preproc_directive)? EOL
+   : line_content EOL
+   ;
+
+line_content: preproc_directive #preproc_line
+   | instruction #instruction_line
+   | labels #labels_line
+   | #empty_line
    ;
 
 // ======= Instruction =======
@@ -32,25 +38,22 @@ COMMA: ',' ;
 // ======= PreProc =======
 
 preproc_directive
-    : preproc_define
-    | preproc_include
-    | preproc_if
-    | preproc_include
-    | preproc_if
-    | preproc_ifdef
-    | preproc_ifndef
-    | preproc_elif
-    | prerpoc_else
-    | preproc_endif
-    | preproc_warning
-    | preproc_error
-    | preproc_ascii_heap
-    | preproc_ascii_stack
-    | preproc_macro
-    | preproc_macro_expansion
-    | preproc_endmacro
+    : preproc_define #define_directive
+    | preproc_include #include_directive
+    | preproc_if #if_directive
+    | preproc_ifdef #ifdef_directive
+    | preproc_ifndef #ifndef_directive
+    | preproc_elif #elif_directive
+    | prerpoc_else #else_directive
+    | preproc_endif #endif_directive
+    | preproc_warning #warning_directive
+    | preproc_error #error_directive
+    | preproc_ascii_heap #ascii_heap_directive
+    | preproc_ascii_stack #ascii_stack_directive
+    | preproc_macro #macro_directive
+    | preproc_macro_expansion #macro_expansion_directive
+    | preproc_endmacro #endmacro_directive
     ;
-
     
 preproc_define
     : DEFINE IDENTIFIER expr? 
@@ -137,24 +140,24 @@ ENDMACRO: '@endmacro' ;
 // ======= Expressions =======
 
 expr
-   : LPAREN expr RPAREN
-   | (PLUS | MINUS | NOT | BIT_NOT) expr 
-   | expr (DIV | MUL | MOD) expr
-   | expr (PLUS | MINUS) expr
-   | expr (LSHFIT | RSHIFT) expr
-   | expr (LESS | LESS_EQ | GREATER | GREATER_EQ) expr
-   | expr (EQ | NEQ ) expr
-   | expr (BIT_AND) expr
-   | expr (BIT_XOR) expr
-   | expr (BIT_OR) expr
-   | expr (AND) expr
-   | expr (OR) expr
-   | expr QUEST expr COLON expr
-   | atom
+   : (PLUS | MINUS | NOT | BIT_NOT) expr #unary_expr
+   | expr (DIV | MUL | MOD) expr #mult_expr
+   | expr (PLUS | MINUS) expr #add_expr
+   | expr (LSHFIT | RSHIFT) expr #shift_expr
+   | expr (LESS | LESS_EQ | GREATER | GREATER_EQ) expr #compare_expr
+   | expr (EQ | NEQ ) expr #equate_expr
+   | expr (BIT_AND) expr #bitand_expr
+   | expr (BIT_XOR) expr #bitxor_expr
+   | expr (BIT_OR) expr #bitor_expr
+   | expr (AND) expr #and_expr
+   | expr (OR) expr #or_expr
+   | expr QUEST expr COLON expr #condit_expr
+   | atom #atom_expr
    ;
 
 atom
-   : numerical_literal
+   : LPAREN expr RPAREN
+   | numerical_literal
    | DEFINED LPAREN IDENTIFIER RPAREN
    | IDENTIFIER
    ;
